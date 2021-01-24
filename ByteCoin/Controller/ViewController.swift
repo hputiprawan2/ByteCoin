@@ -21,8 +21,8 @@ class ViewController: UIViewController {
         coinManager.delegate = self
         currencyPicker.dataSource = self
         currencyPicker.delegate = self
+        currencyPicker.selectRow(0, inComponent: 0, animated: true)
     }
-    
 }
 
 // MARK: - UIPickerViewDataSource
@@ -51,7 +51,6 @@ extension ViewController: UIPickerViewDelegate {
         let selectedCurrency = coinManager.currencyArray[row]
         coinManager.getCointPrice(for: selectedCurrency)
     }
-    
 }
 
 // MARK: - CoinManagerDelegate

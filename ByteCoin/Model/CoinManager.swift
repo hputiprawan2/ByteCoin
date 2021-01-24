@@ -17,7 +17,7 @@ struct CoinManager {
     let baseURL = "https://rest.coinapi.io/v1/exchangerate/BTC"
     let apiKey = "741E304E-B580-4173-AE2D-1C68CA37F118"
     
-    let currencyArray = ["AUD", "BRL","CAD","CNY","EUR",
+    let currencyArray = ["---", "AUD", "BRL","CAD","CNY","EUR",
                          "GBP","HKD","IDR","ILS","INR",
                          "JPY","MXN","NOK","NZD","PLN",
                          "RON","RUB","SEK","SGD","USD","ZAR"]
@@ -25,6 +25,12 @@ struct CoinManager {
     var delegate: CoinManagerDelegate?
     
     func getCointPrice(for currency: String) {
+        
+        if currency == "---" {
+            // Do nothing
+            return
+        }
+        
         let urlString = "\(baseURL)/\(currency)?apikey=\(apiKey)"
         
         if let url = URL(string: urlString) {
@@ -50,7 +56,6 @@ struct CoinManager {
         do {
             let decodedData = try decoder.decode(CoinData.self, from: coinData)
             let lastPrice = decodedData.rate
-            print(lastPrice)
             return lastPrice
         } catch {
             self.delegate?.didFailWithError(error: error)
